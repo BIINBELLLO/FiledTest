@@ -11,6 +11,10 @@ import { ToastrModule } from "ngx-toastr";
 import { BsDatepickerModule } from "ngx-bootstrap";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { HomeComponent } from "./home/home.component";
+import { StoreModule } from "@ngrx/store";
+import { reducers, metaReducers } from "./reducers";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { environment } from "../environments/environment";
 
 @NgModule({
   declarations: [AppComponent, CardPaymentComponent, HomeComponent],
@@ -20,10 +24,21 @@ import { HomeComponent } from "./home/home.component";
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: "toast-bottom-right",
+    }),
     AppRoutingModule,
     BsDatepickerModule.forRoot(),
     NgxSpinnerModule,
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+      },
+    }),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [],
   bootstrap: [AppComponent],

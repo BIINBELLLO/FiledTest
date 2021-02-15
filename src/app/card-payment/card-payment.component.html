@@ -19,8 +19,10 @@
                     formControlName="amount"
                     [ngClass]="{
                       'is-invalid':
-                        newPaymentForm.get('amount').touched &&
-                        newPaymentForm.get('amount').errors
+                        (newPaymentForm.get('amount').touched &&
+                          newPaymentForm.get('amount').errors) ||
+                        (newPaymentForm.get('amount').touched &&
+                          !valueValidatorForAmountField())
                     }"
                   />
                   <div
@@ -38,6 +40,16 @@
                   >
                     Minimum of $1
                   </div>
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="
+                      !newPaymentForm.get('amount').hasError('min') &&
+                      !newPaymentForm.get('amount').hasError('required') &&
+                      !valueValidatorForAmountField()
+                    "
+                  >
+                    Only digits and '.' allowed!
+                  </div>
                 </div>
               </div>
               <div class="col-12">
@@ -49,11 +61,47 @@
                     formControlName="creditCardNumber"
                     [ngClass]="{
                       'is-invalid':
-                        newPaymentForm.get('creditCardNumber').touched &&
-                        newPaymentForm.get('creditCardNumber').errors
+                        (newPaymentForm.get('creditCardNumber').touched &&
+                          newPaymentForm.get('creditCardNumber').errors) ||
+                        (newPaymentForm.get('creditCardNumber').touched &&
+                          !digitsValueValidator('creditCardNumber'))
                     }"
                   />
-                  <div class="invalid-feedback">Required</div>
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="
+                      newPaymentForm
+                        .get('creditCardNumber')
+                        .hasError('required')
+                    "
+                  >
+                    Required
+                  </div>
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="
+                      !newPaymentForm
+                        .get('creditCardNumber')
+                        .hasError('required') &&
+                      !digitsValueValidator('creditCardNumber')
+                    "
+                  >
+                    Only digits allowed!
+                  </div>
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="
+                      !newPaymentForm
+                        .get('creditCardNumber')
+                        .hasError('required') &&
+                      digitsValueValidator('creditCardNumber') &&
+                      newPaymentForm
+                        .get('creditCardNumber')
+                        .hasError('maxlength')
+                    "
+                  >
+                    Maximum of 16 characters allowed!
+                  </div>
                 </div>
               </div>
               <div class="col-12">
@@ -65,11 +113,30 @@
                     formControlName="cardHolderName"
                     [ngClass]="{
                       'is-invalid':
-                        newPaymentForm.get('cardHolderName').touched &&
-                        newPaymentForm.get('cardHolderName').errors
+                        (newPaymentForm.get('cardHolderName').touched &&
+                          newPaymentForm.get('cardHolderName').errors) ||
+                        (newPaymentForm.get('cardHolderName').touched &&
+                          !noneDigitsValueValidator())
                     }"
                   />
-                  <div class="invalid-feedback">Required</div>
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="
+                      newPaymentForm.get('cardHolderName').hasError('required')
+                    "
+                  >
+                    Required
+                  </div>
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="
+                      !newPaymentForm
+                        .get('cardHolderName')
+                        .hasError('required') && !noneDigitsValueValidator()
+                    "
+                  >
+                    Only alphabets allowed!
+                  </div>
                 </div>
               </div>
               <div class="col-12">
@@ -99,13 +166,45 @@
                     placeholder="Security Code (CVV)"
                     [ngClass]="{
                       'is-invalid':
-                        newPaymentForm.get('securityCode').touched &&
-                        newPaymentForm.get('securityCode').errors
+                        (newPaymentForm.get('securityCode').touched &&
+                          newPaymentForm.get('securityCode').errors) ||
+                        (newPaymentForm.get('securityCode').touched &&
+                          !digitsValueValidator('securityCode'))
                     }"
                     formControlName="securityCode"
                   />
-                  <div class="invalid-feedback">
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="
+                      newPaymentForm.get('securityCode').hasError('minlength')
+                    "
+                  >
+                    Minimum of 3 Characters Allowed
+                  </div>
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="
+                      !newPaymentForm
+                        .get('securityCode')
+                        .hasError('minlength') &&
+                      newPaymentForm.get('securityCode').hasError('maxlength')
+                    "
+                  >
                     Maximum of 3 Characters Allowed
+                  </div>
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="
+                      !newPaymentForm
+                        .get('securityCode')
+                        .hasError('maxlength') &&
+                      !newPaymentForm
+                        .get('securityCode')
+                        .hasError('minlength') &&
+                      !digitsValueValidator('securityCode')
+                    "
+                  >
+                    Only digits allowed!
                   </div>
                 </div>
               </div>

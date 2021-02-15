@@ -12,7 +12,10 @@
           </div>
           <div class="card-body">
             <div class="row">
-              <div class="col-12" *ngFor="let card of availableCards">
+              <div
+                class="col-12"
+                *ngFor="let card of availableCardsFromTheStore$ | async"
+              >
                 <div class="card">
                   <div class="card-body">
                     <p>
@@ -37,7 +40,7 @@
                     <p>
                       Expiration Date:
                       <span class="font-weight-bold text-secondary"
-                        >{{ card.expirationDate.getMonth() }}/{{
+                        >{{ card.expirationDate.getMonth() + 1 }}/{{
                           card.expirationDate.getFullYear()
                         }}</span
                       >
