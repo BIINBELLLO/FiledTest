@@ -15,6 +15,7 @@ import { StoreModule } from "@ngrx/store";
 import { reducers, metaReducers } from "./reducers";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { environment } from "../environments/environment";
+import { storageSyncMetaReducer } from "ngrx-store-persist";
 
 @NgModule({
   declarations: [AppComponent, CardPaymentComponent, HomeComponent],
@@ -32,7 +33,7 @@ import { environment } from "../environments/environment";
     BsDatepickerModule.forRoot(),
     NgxSpinnerModule,
     StoreModule.forRoot(reducers, {
-      metaReducers,
+      metaReducers: [storageSyncMetaReducer],
       runtimeChecks: {
         strictStateImmutability: true,
         strictActionImmutability: true,

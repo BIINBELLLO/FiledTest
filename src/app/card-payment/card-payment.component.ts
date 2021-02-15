@@ -67,9 +67,9 @@ export class CardPaymentComponent implements OnInit, OnDestroy {
       this.toastr.error(`Invalid Entries Detected!`);
     } else {
       this.cardDetail = this.newPaymentForm.value;
-      // I am dispatching the action to the store irrespective of the http call result because I
-      // know that there is no api endpoint to receive the call.
-      // This will only be on the success section if there was a real api endpoint
+      // I am dispatching the action to the store irrespective of the http call result because
+      // I know that there is no api endpoint to receive the call.
+      // This would have been on the success section if there was a real api endpoint to send the request to
 
       this.spinner.show();
 

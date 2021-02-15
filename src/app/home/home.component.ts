@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { select } from "@ngrx/store";
 import { Store } from "@ngrx/store";
 import { Observable, Subscription } from "rxjs";
@@ -11,25 +11,23 @@ import { AppState } from "../models/app-state";
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();
   availableCardsFromTheStore$: Observable<Array<CreditCardModel>>;
-  availableCards: Array<CreditCardModel> = [
-    {
-      creditCardNumber: "1234 6543 6534 6789",
-      cardHolderName: "John James Doe",
-      expirationDate: new Date(),
-      amount: 750,
-      securityCode: "234",
-    },
-  ];
+  availableCardsPayment: Array<CreditCardModel> = [];
 
   constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
     this.availableCardsFromTheStore$ = this.store.pipe(select(selectPayments));
-    this.availableCardsFromTheStore$.subscribe((result) => {
-      console.log(result);
-    });
+    this.sub.add(
+      this.availableCardsFromTheStore$.subscribe((result) => {
+        this.availableCardsPayment = result;
+      })
+    );
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }
