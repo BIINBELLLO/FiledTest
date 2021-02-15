@@ -1,0 +1,126 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-center mt-5">
+    <div class="page-content__wrapper">
+      <h4 class="page__header">Welcome to Filed Payment Platform</h4>
+      <div class="mt-5 page__body">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between">
+            <h6>Make New Payment</h6>
+            <button class="btn btn-info" routerLink="../home">Back</button>
+          </div>
+          <div class="card-body">
+            <div class="form-row" [formGroup]="newPaymentForm">
+              <div class="col-12">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Amount"
+                    formControlName="amount"
+                    [ngClass]="{
+                      'is-invalid':
+                        newPaymentForm.get('amount').touched &&
+                        newPaymentForm.get('amount').errors
+                    }"
+                  />
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="newPaymentForm.get('amount').hasError('required')"
+                  >
+                    Required
+                  </div>
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="
+                      newPaymentForm.get('amount').hasError('min') &&
+                      !newPaymentForm.get('amount').hasError('required')
+                    "
+                  >
+                    Minimum of $1
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Card Number"
+                    formControlName="creditCardNumber"
+                    [ngClass]="{
+                      'is-invalid':
+                        newPaymentForm.get('creditCardNumber').touched &&
+                        newPaymentForm.get('creditCardNumber').errors
+                    }"
+                  />
+                  <div class="invalid-feedback">Required</div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Card Holder Name"
+                    formControlName="cardHolderName"
+                    [ngClass]="{
+                      'is-invalid':
+                        newPaymentForm.get('cardHolderName').touched &&
+                        newPaymentForm.get('cardHolderName').errors
+                    }"
+                  />
+                  <div class="invalid-feedback">Required</div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid':
+                        newPaymentForm.get('expirationDate').touched &&
+                        newPaymentForm.get('expirationDate').errors
+                    }"
+                    placeholder="Expiration Date"
+                    bsDatepicker
+                    [minDate]="minDate"
+                    [bsConfig]="{ dateInputFormat: 'MM-YYYY' }"
+                    formControlName="expirationDate"
+                  />
+                  <div class="invalid-feedback">Required</div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Security Code (CVV)"
+                    [ngClass]="{
+                      'is-invalid':
+                        newPaymentForm.get('securityCode').touched &&
+                        newPaymentForm.get('securityCode').errors
+                    }"
+                    formControlName="securityCode"
+                  />
+                  <div class="invalid-feedback">
+                    Maximum of 3 Characters Allowed
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <button
+                  class="btn btn-info btn-block"
+                  (click)="completePayment()"
+                >
+                  Complete Payment
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

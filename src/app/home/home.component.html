@@ -1,0 +1,60 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-center mt-5">
+    <div class="page-content__wrapper">
+      <h4 class="page__header">Welcome to Filed Payment Platform</h4>
+      <div class="mt-5 page__body">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between">
+            <h6>Available Cards/Payments</h6>
+            <button class="btn btn-info" routerLink="../add-new">
+              Add New
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12" *ngFor="let card of availableCards">
+                <div class="card">
+                  <div class="card-body">
+                    <p>
+                      Amount:
+                      <span class="font-weight-bold text-secondary"
+                        >${{ card.amount }}</span
+                      >
+                    </p>
+                    <h5 class="text-info">Card Detail</h5>
+                    <p>
+                      Card Number:
+                      <span class="font-weight-bold text-secondary">{{
+                        card.creditCardNumber
+                      }}</span>
+                    </p>
+                    <p>
+                      Card Holder:
+                      <span class="font-weight-bold text-secondary">{{
+                        card.cardHolderName
+                      }}</span>
+                    </p>
+                    <p>
+                      Expiration Date:
+                      <span class="font-weight-bold text-secondary"
+                        >{{ card.expirationDate.getMonth() }}/{{
+                          card.expirationDate.getFullYear()
+                        }}</span
+                      >
+                    </p>
+                    <p>
+                      Security Number:
+                      <span class="font-weight-bold text-secondary">{{
+                        card.securityCode
+                      }}</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
