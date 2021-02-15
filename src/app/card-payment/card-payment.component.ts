@@ -41,7 +41,14 @@ export class CardPaymentComponent implements OnInit, OnDestroy {
 
   initNewPaymentForm() {
     this.newPaymentForm = this.formBuilder.group({
-      creditCardNumber: ["", [Validators.required, Validators.maxLength(16)]],
+      creditCardNumber: [
+        "",
+        [
+          Validators.required,
+          Validators.maxLength(16),
+          Validators.minLength(16),
+        ],
+      ],
       cardHolderName: ["", Validators.required],
       expirationDate: ["", Validators.required],
       securityCode: ["", [Validators.minLength(3), Validators.maxLength(3)]],

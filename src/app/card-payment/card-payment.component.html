@@ -97,6 +97,20 @@
                       digitsValueValidator('creditCardNumber') &&
                       newPaymentForm
                         .get('creditCardNumber')
+                        .hasError('minlength')
+                    "
+                  >
+                    Minimum of 16 characters allowed!
+                  </div>
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="
+                      !newPaymentForm
+                        .get('creditCardNumber')
+                        .hasError('required') &&
+                      digitsValueValidator('creditCardNumber') &&
+                      newPaymentForm
+                        .get('creditCardNumber')
                         .hasError('maxlength')
                     "
                   >
